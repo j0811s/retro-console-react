@@ -1,0 +1,11 @@
+@use "./core/reset";
+@use "./core/base";
+@use "./frame/frame";
+@use "./button/powerSwitch";
+@use "./button/action";
+@use "./button/dpad";
+@use "./screen/screen";
+@use "./button/volume";
+
+// ゲーム
+@use "./game/default";

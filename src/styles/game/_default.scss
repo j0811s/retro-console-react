@@ -1,0 +1,21 @@
+#rom-slot .game-default {
+  display: grid;
+  place-content: center;
+  place-items: center;
+  grid-template-columns: 1fr;
+  height: 100%;
+  background-color: #fff;
+
+  h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1;
+  }
+
+  div {
+    font-size: 16px;
+    line-height: 1;
+    margin-top: 15px;
+  }
+}

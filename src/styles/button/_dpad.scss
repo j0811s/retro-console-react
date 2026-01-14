@@ -1,0 +1,68 @@
+// 十字キー
+.dpad {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0;
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 25%;
+    height: 25%;
+    z-index: 2;
+    border-radius: 9999px;
+    box-shadow:
+      inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+      inset -4px -4px 8px rgba(255, 255, 255, 0.7);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 33%;
+    left: 33%;
+    z-index: 0;
+    width: 34%;
+    height: 34%;
+    background-color: rgb(192, 192, 192);
+  }
+
+  button {
+    font-size: 20px;
+    position: relative;
+    z-index: 1;
+
+    &[data-key="arrowup"] {
+      grid-column: 2;
+      grid-row: 1;
+      border-radius: 5px 5px 0 0;
+      box-shadow: inset -3px 1px 2px -2px rgba(0, 0, 0, 0.3);
+    }
+
+    &[data-key="arrowright"] {
+      grid-column: 3;
+      grid-row: 2;
+      border-radius: 0 5px 5px 0;
+      box-shadow: inset -2px -2px 2px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    &[data-key="arrowdown"] {
+      grid-column: 2;
+      grid-row: 3;
+      border-radius: 0 0 5px 5px;
+      box-shadow: inset -2px -2px 2px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    &[data-key="arrowleft"] {
+      grid-column: 1;
+      grid-row: 2;
+      border-radius: 5px 0 0 5px;
+      box-shadow: inset 1px -3px 2px -2px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

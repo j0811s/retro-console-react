@@ -1,0 +1,106 @@
+:root {
+  --power-on: #0f0;
+  --power-low: #ff2a00;
+  --power-off: #282727;
+  --screen-on: #fff;
+  --screen-low: rgb(0, 0, 0, 0.2);
+  --screen-off: #666;
+}
+
+[data-power="off"] {
+  .display::before {
+    background-color: var(--power-off);
+  }
+  .screen {
+    background-color: var(--screen-off);
+  }
+}
+[data-power="on"] {
+  .display::before {
+    background-color: var(--power-on);
+    box-shadow: 0 0 2px var(--power-on);
+  }
+  .screen {
+    background-color: var(--screen-on);
+  }
+  #rom-slot {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+[data-power="low"] {
+  .display::before {
+    background-color: var(--power-low);
+    box-shadow: 0 0 2px var(--power-low);
+  }
+  .screen {
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 99999;
+      background-color: var(--screen-low);
+    }
+  }
+}
+
+.display {
+  position: relative;
+  width: 100%;
+  min-width: 300px;
+  min-height: 220px;
+  background-color: #222;
+  padding: 40px 30px 60px 30px;
+  border-radius: 20px;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    right: -55px;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    transition: all 0.15s linear;
+  }
+  .logo {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgb(192, 192, 192);
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+      -1px 1px 0 #000;
+  }
+}
+
+.screen {
+  position: relative;
+  width: 240px;
+  height: 160px;
+  transition: all 0.15s linear;
+  font-size: 10px;
+  filter: blur(0.6px) sepia(60%);
+
+  .boot {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-content: center;
+    opacity: 0;
+    visibility: hidden;
+
+    .logo {
+      position: static;
+    }
+  }
+}
+
+#rom-slot {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.15s linear;
+}

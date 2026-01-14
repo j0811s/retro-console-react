@@ -1,0 +1,44 @@
+// フレーム
+.frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  max-width: 640px;
+  margin: auto;
+  background-color: #6a4c9c;
+  padding: 40px 20px;
+  border-radius: 25px;
+  box-shadow:
+    12px 12px 20px rgba(0, 0, 0, 0.5),
+    -12px -12px 20px rgba(255, 255, 255, 0.2);
+
+  .left,
+  .right {
+    display: grid;
+    place-content: center;
+    grid-template-columns: 1fr;
+    height: 100%;
+  }
+
+  .right {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      left: -5px;
+      bottom: 60px;
+      width: 60px;
+      height: 4px;
+      border-radius: 9999px;
+      box-shadow:
+        0 5px 0 #000,
+        0 12px 0 #000,
+        0 19px 0 #000,
+        0 26px 0 #000,
+        0 33px 0 #000;
+    }
+  }
+}

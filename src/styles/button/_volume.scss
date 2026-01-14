@@ -1,0 +1,35 @@
+.volumeSlider {
+  cursor: grab;
+  appearance: none;
+  position: absolute;
+  top: 100%;
+  right: 45px;
+  z-index: 0;
+  width: 30px;
+  height: 2px;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  border-radius: 0 0 2px 2px;
+  background-color: #222;
+  &:active {
+    cursor: grabbing;
+  }
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 4px;
+    background-color: #222;
+    border-radius: 0 0 10px 10px;
+    border: none;
+    transform: translateY(2px);
+  }
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 4px;
+    background-color: #222;
+    border-radius: 0 0 10px 10px;
+    border: none;
+    transform: translateY(2px);
+  }
+}
