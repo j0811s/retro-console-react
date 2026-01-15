@@ -1,18 +1,20 @@
 import '@/styles/style.scss';
 import type { PowerState } from '@/types/system';
+import type { RomType } from "@/types/rom";
 import { SYSTEM_PHASE, POWER_STATE } from '@/constants/system';
 import { LOW_BATTERY_DELAY } from '@/constants/power';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAtom } from 'jotai';
 import useSoundEffect from "@/hooks/audio/soundEffect";
 import { powerStateAtom, systemPhaseAtom } from '@/stores/atoms';
 import { inputManager } from '@/lib/input/InputManager';
 import { GameConsole } from '@/features/console';
-import SampleGame from '@/components/game/Sample';
+import { ROM_MAP } from "@/constants/rom";
 
 function App() {
   const [phase, setPhase] = useAtom(systemPhaseAtom);
   const [power, setPower] = useAtom(powerStateAtom);
+  const [romType, setRomType] = useState<RomType>("SAMPLE");
   const powerRef = useRef(power);
   const { playSeBoot, playSeAction, playSeDpad } = useSoundEffect();
   
@@ -91,7 +93,14 @@ function App() {
   }, [phase, setPower]);
 
   return (
-    <GameConsole power={power} rom={<SampleGame />} />
+    <div className='app'>
+      <h1>Retro Console React</h1>
+      <GameConsole power={power} rom={ROM_MAP[romType]} />
+      <div className='button-wrapper'>
+        <button type='button' onClick={() => setRomType("SAMPLE")}>SELECT SAMPLE</button>
+        <button type='button' onClick={() => setRomType("BATTLE")}>SELECT BATTLE</button>
+      </div>
+    </div>
   )
 }
 
