@@ -7,7 +7,7 @@
   --screen-off: #666;
 }
 
-[data-power="off"] {
+[data-power="OFF"] {
   .display::before {
     background-color: var(--power-off);
   }
@@ -15,7 +15,7 @@
     background-color: var(--screen-off);
   }
 }
-[data-power="on"] {
+[data-power="ON"] {
   .display::before {
     background-color: var(--power-on);
     box-shadow: 0 0 2px var(--power-on);
@@ -23,12 +23,8 @@
   .screen {
     background-color: var(--screen-on);
   }
-  #rom-slot {
-    visibility: visible;
-    opacity: 1;
-  }
 }
-[data-power="low"] {
+[data-power="LOW"] {
   .display::before {
     background-color: var(--power-low);
     box-shadow: 0 0 2px var(--power-low);
@@ -41,6 +37,36 @@
       z-index: 99999;
       background-color: var(--screen-low);
     }
+  }
+}
+[data-boot="OFF"] {
+  .boot {
+    visibility: hidden;
+    opacity: 0;
+  }
+  #rom-slot {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+[data-boot="BOOTING"] {
+  .boot {
+    visibility: visible;
+    opacity: 1;
+  }
+  #rom-slot {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+[data-boot="RUNNING"] {
+  .boot {
+    visibility: hidden;
+    opacity: 0;
+  }
+  #rom-slot {
+    visibility: visible;
+    opacity: 1;
   }
 }
 
@@ -90,8 +116,7 @@
     z-index: 2;
     display: grid;
     place-content: center;
-    opacity: 0;
-    visibility: hidden;
+    transition: all 0.15s linear;
 
     .logo {
       position: static;
