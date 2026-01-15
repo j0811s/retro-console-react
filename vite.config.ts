@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react-swc';
 // https://vite.dev/config/
 export default defineConfig({
   build: {
-    target: 'ES2023',
+    target: 'baseline-widely-available',
     minify: 'esbuild',
     cssMinify: true
   },
@@ -22,7 +22,6 @@ export default defineConfig({
         "src/utils/**/*.{ts,tsx,js,jsx}",
       ],
       exclude: [
-        "src/App.tsx",
         "src/main.tsx",
         "src/vite-env.d.ts",
       ],
