@@ -5,3 +5,7 @@
 // (the specifier has no ".css" suffix). Ambient-declare it so the exact
 // `import "@wterm/react/css"` from the plan typechecks.
 declare module "@wterm/react/css";
+
+// browserify-zlib ships no type declarations and no @types package exists.
+// Used only by src/lib/polyfills/zlib.ts as the browser zlib polyfill target.
+declare module "browserify-zlib";

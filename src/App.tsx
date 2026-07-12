@@ -19,7 +19,12 @@ function App() {
   
   useEffect(() => {
     inputManager.mount();
+    return () => {
+      inputManager.unmount();
+    };
+  }, []);
 
+  useEffect(() => {
     const unsubscribe = inputManager.subscribe((action) => {
       // 電源スイッチは常に有効
       if (action === "POWER") {
@@ -76,7 +81,6 @@ function App() {
 
     return () => {
       unsubscribe();
-      inputManager.unmount();
     };
   }, [phase, setPower, playSeBoot, playSeAction, playSeDpad, setPhase]);
 
