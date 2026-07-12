@@ -15,7 +15,11 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@wterm/dom": "0.3.0",
+    "@wterm/just-bash": "0.3.0",
+    "@wterm/react": "0.3.0",
     "jotai": "^2.16.2",
+    "just-bash": "2.14.5",
     "postcss": "^8.5.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"

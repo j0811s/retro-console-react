@@ -70,6 +70,14 @@
   }
 }
 
+[data-mode="terminal"] {
+  .screen {
+    width: 600px;
+    height: 400px;
+    filter: none;
+  }
+}
+
 .display {
   position: relative;
   width: 100%;
