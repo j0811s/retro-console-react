@@ -1,0 +1,50 @@
+import { inputManager } from "@/lib/input/InputManager";
+
+// inputManager is a module-level singleton, so mount/unmount and unsubscribe
+// in every test to avoid state leaking between tests.
+describe("inputManager", () => {
+  afterEach(() => {
+    inputManager.unmount();
+  });
+
+  it("emits UP when ArrowUp is pressed after mount", () => {
+    const listener = vi.fn();
+    inputManager.mount();
+    const unsubscribe = inputManager.subscribe(listener);
+
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+
+    expect(listener).toHaveBeenCalledWith("UP");
+    unsubscribe();
+  });
+
+  it("stops notifying a listener after it unsubscribes", () => {
+    const listener = vi.fn();
+    inputManager.mount();
+    const unsubscribe = inputManager.subscribe(listener);
+    unsubscribe();
+
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it("does not listen for keydown before mount", () => {
+    const listener = vi.fn();
+    inputManager.subscribe(listener);
+
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+});
+
+// For a hook that reads jotai atoms (e.g. src/hooks/audio/soundEffect.ts),
+// wrap renderHook with a Jotai Provider so it has an isolated store:
+//
+// import { renderHook } from "@testing-library/react";
+// import { Provider } from "jotai";
+//
+// renderHook(() => useSoundEffect(), {
+//   wrapper: ({ children }) => <Provider>{children}</Provider>,
+// });

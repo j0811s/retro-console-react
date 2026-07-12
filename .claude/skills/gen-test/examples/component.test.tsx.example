@@ -1,0 +1,27 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import DpadButton from "@/features/dpad/components/DpadButton";
+
+describe("DpadButton", () => {
+  it("renders with an accessible label for the given direction", () => {
+    render(<DpadButton direction="up" />);
+    expect(screen.getByRole("button", { name: "up方向ボタン" })).toBeInTheDocument();
+  });
+
+  it("calls onPress when clicked", async () => {
+    const onPress = vi.fn();
+    const user = userEvent.setup();
+    render(<DpadButton direction="up" onPress={onPress} />);
+
+    await user.click(screen.getByRole("button", { name: "up方向ボタン" }));
+
+    expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not throw when onPress is omitted", async () => {
+    const user = userEvent.setup();
+    render(<DpadButton direction="down" />);
+
+    await user.click(screen.getByRole("button", { name: "down方向ボタン" }));
+  });
+});
