@@ -6,12 +6,12 @@
 
 **Architecture:** A new cartridge component (`src/components/game/Terminal.tsx`) wraps `@wterm/react`'s `<Terminal>` and drives a `@wterm/just-bash` `BashShell` entirely client-side (no backend/PTY). It's wired into the existing ROM system (`RomType`/`ROM_MAP`) exactly like `SampleGame`/`BattleGame`. A new `romTypeAtom` (jotai) lets `ConsoleUi` set a `data-mode` attribute the same way it already reads `data-power`/`data-boot`, and SCSS keys off that attribute to resize the screen and drop the retro filter. `InputManager` gets `pause()`/`resume()` (aliases of its existing `unmount()`/`mount()`) so the terminal component can take over the keyboard while mounted.
 
-**Tech Stack:** React 19, TypeScript, Vite, Jotai, Sass, Vitest + Testing Library + happy-dom, `@wterm/react` 0.3.0, `@wterm/dom` 0.3.0, `@wterm/just-bash` 0.3.0, `just-bash` 3.1.0.
+**Tech Stack:** React 19, TypeScript, Vite, Jotai, Sass, Vitest + Testing Library + happy-dom, `@wterm/react` 0.3.0, `@wterm/dom` 0.3.0, `@wterm/just-bash` 0.3.0, `just-bash` 2.14.5.
 
 ## Global Constraints
 
 - `@wterm/react` requires `react: ^18.0.0 || ^19.0.0` — project is on React 19.2.3, compatible.
-- Install exact versions: `@wterm/dom@0.3.0`, `@wterm/react@0.3.0`, `@wterm/just-bash@0.3.0`, `just-bash@3.1.0` (verified present on npm and older than the project's `.npmrc` `min-release-age=3` guard).
+- Install exact versions: `@wterm/dom@0.3.0`, `@wterm/react@0.3.0`, `@wterm/just-bash@0.3.0`, `just-bash@2.14.5` (verified present on npm and older than the project's `.npmrc` `min-release-age=3` guard). `just-bash` is pinned to `2.14.5`, not the newer `3.1.0`, because `@wterm/just-bash@0.3.0` declares `peerDependencies: { "just-bash": "^2" }` — installing `3.1.0` alongside it produces an ERESOLVE conflict.
 - No backend/PTY/WebSocket — the shell must run entirely client-side via `@wterm/just-bash`'s `BashShell`.
 - Terminal screen size in terminal mode: exactly `width: 600px; height: 400px` on `.screen`; `.frame` `max-width: 900px` in terminal mode (current default is 640px, which does not fit 600px + two 100px side columns + gaps).
 - No automated test for `Terminal.tsx` itself (WASM/canvas dependency makes happy-dom testing impractical) — automated tests only for `InputManager.pause()/resume()` and `ConsoleUi`'s `data-mode` wiring.
@@ -146,7 +146,7 @@ git commit -m "Add InputManager.pause()/resume() for ROMs that need exclusive ke
 
 Run:
 ```bash
-npm install @wterm/dom@0.3.0 @wterm/react@0.3.0 @wterm/just-bash@0.3.0 just-bash@3.1.0
+npm install @wterm/dom@0.3.0 @wterm/react@0.3.0 @wterm/just-bash@0.3.0 just-bash@2.14.5
 ```
 Expected: `package.json`/`package-lock.json` updated with these four exact-pinned entries (the project's `.npmrc` has `save-exact=true`). If the install fails with a `min-release-age` error, these versions are already older than the 3-day window as of writing this plan — re-check `npm view <pkg> time.modified` before assuming it's a real block.
 
