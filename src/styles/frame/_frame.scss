@@ -15,6 +15,10 @@
     12px 12px 20px rgba(0, 0, 0, 0.5),
     -12px -12px 20px rgba(255, 255, 255, 0.2);
 
+  &[data-mode="terminal"] {
+    max-width: 900px;
+  }
+
   .left,
   .right {
     display: grid;

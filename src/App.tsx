@@ -1,12 +1,11 @@
 import '@/styles/style.scss';
 import type { PowerState } from '@/types/system';
-import type { RomType } from "@/types/rom";
 import { SYSTEM_PHASE, POWER_STATE } from '@/constants/system';
 import { LOW_BATTERY_DELAY } from '@/constants/power';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAtom } from 'jotai';
 import useSoundEffect from "@/hooks/audio/soundEffect";
-import { powerStateAtom, systemPhaseAtom } from '@/stores/atoms';
+import { powerStateAtom, systemPhaseAtom, romTypeAtom } from '@/stores/atoms';
 import { inputManager } from '@/lib/input/InputManager';
 import { GameConsole } from '@/features/console';
 import { ROM_MAP } from "@/constants/rom";
@@ -14,13 +13,18 @@ import { ROM_MAP } from "@/constants/rom";
 function App() {
   const [phase, setPhase] = useAtom(systemPhaseAtom);
   const [power, setPower] = useAtom(powerStateAtom);
-  const [romType, setRomType] = useState<RomType>("SAMPLE");
+  const [romType, setRomType] = useAtom(romTypeAtom);
   const powerRef = useRef(power);
   const { playSeBoot, playSeAction, playSeDpad } = useSoundEffect();
   
   useEffect(() => {
     inputManager.mount();
+    return () => {
+      inputManager.unmount();
+    };
+  }, []);
 
+  useEffect(() => {
     const unsubscribe = inputManager.subscribe((action) => {
       // 電源スイッチは常に有効
       if (action === "POWER") {
@@ -77,7 +81,6 @@ function App() {
 
     return () => {
       unsubscribe();
-      inputManager.unmount();
     };
   }, [phase, setPower, playSeBoot, playSeAction, playSeDpad, setPhase]);
 
@@ -99,6 +102,7 @@ function App() {
       <div className='button-wrapper'>
         <button type='button' onClick={() => setRomType("SAMPLE")}>SELECT SAMPLE</button>
         <button type='button' onClick={() => setRomType("BATTLE")}>SELECT BATTLE</button>
+        <button type='button' onClick={() => setRomType("TERMINAL")}>SELECT TERMINAL</button>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { systemPhaseAtom, powerStateAtom } from "@/stores/atoms";
+import { systemPhaseAtom, powerStateAtom, romTypeAtom } from "@/stores/atoms";
 import { useAtomValue } from "jotai";
 
 type Props = {
@@ -11,9 +11,11 @@ type Props = {
 function ConsoleUi({ dpad, display, action, controls }: Props) {
   const systemPhase = useAtomValue(systemPhaseAtom);
   const powerState = useAtomValue(powerStateAtom);
+  const romType = useAtomValue(romTypeAtom);
+  const mode = romType === "TERMINAL" ? "terminal" : "default";
 
   return (
-    <main id="game-console" className="frame" data-power={powerState} data-boot={systemPhase}>
+    <main id="game-console" className="frame" data-power={powerState} data-boot={systemPhase} data-mode={mode}>
       <div className="left">
         {dpad}
       </div>

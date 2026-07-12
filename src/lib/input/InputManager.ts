@@ -80,6 +80,8 @@ function createInputManager() {
     emit,
     mount,
     unmount,
+    pause: unmount,
+    resume: mount,
   }
 }
 
